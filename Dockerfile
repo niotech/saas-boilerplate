@@ -12,3 +12,4 @@ RUN pnpm install
 RUN ls -a
 
 CMD ["pnpm", "saas", "up"]
+
