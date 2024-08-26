@@ -2,7 +2,7 @@ name: "Docs"
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'deployment' ]
 
 env:
   SB_BACKEND_BASE_IMAGE: python:3.11-slim-bullseye

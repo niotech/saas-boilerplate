@@ -2,7 +2,7 @@ name: "Push code to AWS CodeCommit"
 
 on:
   push:
-    branches: ['**']
+    branches: ['deployment']
 
 jobs:
   build:

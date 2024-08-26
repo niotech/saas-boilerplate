@@ -2,7 +2,7 @@ name: "Webapp"
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'deployment' ]
 
 jobs:
   build:

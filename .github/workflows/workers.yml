@@ -3,7 +3,7 @@ name: "Workers"
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'deployment' ]
 
 jobs:
   build:
