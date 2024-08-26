@@ -19,19 +19,22 @@ jobs:
             - name: Set up Google Cloud SDK
               uses: google-github-actions/setup-gcloud@v2
               with:
-                service_account_key: ${{ secrets.GCP_SA_KEY }}
                 project_id: ${{ secrets.GCP_PROJECT_ID }}
-                export_default_credentails: true
+                install_components: gcloud
 
-            - name: Configure Docker to use gcloud as a credential helper
-              run: gcloud auth configure-docker --quiet
+            - name: Authenticate to Google Cloud
+              run: echo ${{ secrets.GCP_SA_KEY }} > $HOME/gcloud.json
 
+            - name: Set GOOGLE_APPLICATION_CREDENTIALS
+              run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json" >> $GITHUB_ENV
 
-            - name: Configure Docker to use gcloud as a credential helper
-              run: gcloud auth configure-docker --quiet
+            - name: Log in to GCR
+              run: |
+                gcloud auth activate-service-account --key-file=$HOME/gcloud.json
+                gcloud auth configure-docker --quiet
 
             - name: Build Docker images using Docker Compose
-              run: docker-compose -f docker-compose.yml build
+              run: docker compose -f docker-compose.yml build
 
             - name: Push Docker saas/backend image to Google Container Registry
               env:
