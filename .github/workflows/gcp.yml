@@ -42,7 +42,7 @@ jobs:
 
             - name: Push Docker saas/backend image to Google Container Registry
               run:
-                docker tag saas/backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas/backend:latest
+                # docker tag saas/backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas/backend:latest
                 docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas/backend:latest
 
             - name: Push Docker saas-boilerplate-ssm-editor image to Google Container Registry
