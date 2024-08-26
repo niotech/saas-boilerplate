@@ -37,9 +37,12 @@ jobs:
             - name: Build Docker images using Docker Compose
               run: docker compose -f docker-compose.yml build
 
+            - name: Check created Docker Images
+              run: docker image ls
+
             - name: Push Docker saas/backend image to Google Container Registry
               env:
-                IMAGE_NAME: saas/backend
+                IMAGE_NAME: "saas/backend"
               run:
                 IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
                 docker tag $IMAGE_TAG
