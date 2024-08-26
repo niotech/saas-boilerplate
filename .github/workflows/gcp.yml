@@ -23,7 +23,7 @@ jobs:
                 install_components: gcloud
 
             - name: Authenticate to Google Cloud
-              run: echo ${{ secrets.GCP_SA_KEY }} > $HOME/gcloud.json
+              run: echo "${{ secrets.GCP_SA_KEY }}" > $HOME/gcloud.json
 
             - name: Set GOOGLE_APPLICATION_CREDENTIALS
               run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json" >> $GITHUB_ENV
