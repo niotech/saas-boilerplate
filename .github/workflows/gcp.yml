@@ -1,0 +1,56 @@
+---
+name: Build and Push Images to GCP
+
+on:
+    push:
+        branches: [main]
+jobs:
+    build-push-gcr:
+        name: Build and Push to GCP
+        runs-on: ubuntu-20.04
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v2
+
+            - name: Log in to Google Container Registry
+              run: echo "${{ secrets.GCP_SA_KEY }}" | docker login -u _json_key --password-stdin https://gcr.io
+
+            - name: Set up Google Cloud SDK
+              uses: google-github-actions/setup-gcloud@v2
+              with:
+                service_account_key: ${{ secrets.GCP_SA_KEY }}
+                project_id: ${{ secret.GCP_PROJECT_ID }}
+                export_default_credentails: true
+
+            - name: Configure Docker to use gcloud as a credential helper
+              run: gcloud auth configure-docker --quiet
+
+            - name: Build Docker images using Docker Compose
+              run: docker-compose -f docker-compose.yml build
+
+            - name: Push Docker saas/backend image to Google Container Registry
+              env:
+                IMAGE_NAME: saas/backend
+              run:
+                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
+                docker tag $IMAGE_TAG
+                docker push $IMAGE_TAG
+
+            - name: Push Docker saas-boilerplate-ssm-editor image to Google Container Registry
+              env:
+                IMAGE_NAME: saas-boilerplate-ssm-editor
+              run:
+                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
+                docker tag $IMAGE_TAG
+                docker push $IMAGE_TAG
+
+            - name: Push Docker saas-boilerplate-workers image to Google Container Registry
+              env:
+                IMAGE_NAME: saas-boilerplate-workers
+              run:
+                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
+                docker tag $IMAGE_TAG
+                docker push $IMAGE_TAG
