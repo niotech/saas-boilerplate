@@ -41,25 +41,16 @@ jobs:
               run: docker image ls
 
             - name: Push Docker saas/backend image to Google Container Registry
-              env:
-                IMAGE_NAME: "saas/backend"
               run:
-                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
-                docker tag $IMAGE_TAG
-                docker push $IMAGE_TAG
+                docker tag saas/backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas/backend:latest
+                docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas/backend:latest
 
             - name: Push Docker saas-boilerplate-ssm-editor image to Google Container Registry
-              env:
-                IMAGE_NAME: saas-boilerplate-ssm-editor
               run:
-                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
-                docker tag $IMAGE_TAG
-                docker push $IMAGE_TAG
+                docker tag saas-boilerplate-ssm-editor:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas-boilerplate-ssm-editor:latest
+                docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas-boilerplate-ssm-editor:latest
 
             - name: Push Docker saas-boilerplate-workers image to Google Container Registry
-              env:
-                IMAGE_NAME: saas-boilerplate-workers
               run:
-                IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:latest
-                docker tag $IMAGE_TAG
-                docker push $IMAGE_TAG
+                docker tag saas-boilerplate-workers:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas-boilerplate-workers:latest
+                docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/saas-boilerplate-workers:latest
