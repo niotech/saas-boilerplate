@@ -3,7 +3,8 @@ name: Build and Push Images to GCP
 
 on:
     push:
-        branches: [main]
+        branches:
+          - main
 jobs:
     build-push-gcr:
         name: Build and Push to GCP
