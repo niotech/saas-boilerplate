@@ -1,0 +1,53 @@
+steps:
+  # Step 1: Pull Docker Compose image
+  - name: 'docker/compose:1.29.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        docker-compose -f docker-compose.yml pull
+
+  # Step 2: Build and push each service defined in your Docker Compose file
+  - name: 'docker/compose:1.29.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        docker-compose -f docker-compose.yml build
+        docker image ls
+        docker-compose -f docker-compose.yml push
+
+  # Optional: Run Docker Compose locally (if needed)
+  - name: 'docker/compose:1.29.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        docker-compose -f docker-compose.yml up -d
+        docker image ls
+
+  # Step 3: Deploy to Cloud Run
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+  #   entrypoint: 'gcloud'
+  #   args:
+  #     - 'run'
+  #     - 'deploy'
+  #     - '[CLOUD_RUN_SERVICE_NAME]'  # Replace with your Cloud Run service name
+  #     - '--image'
+  #     - 'gcr.io/[PROJECT_ID]/[YOUR_IMAGE]:$BUILD_ID'  # Replace with your image name
+  #     - '--region'
+  #     - '[REGION]'  # Replace with the region where you want to deploy
+  #     - '--platform'
+  #     - 'managed'
+  #     - '--allow-unauthenticated'
+
+  # Cleanup: Stop and remove containers (optional if running locally)
+  - name: 'docker/compose:1.29.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        docker-compose -f docker-compose.yml down
+
+images:
+  - 'gcr.io/[PROJECT_ID]/[YOUR_IMAGE]:$BUILD_ID'
