@@ -51,7 +51,7 @@ steps:
 
 serviceAccount: 'saas-445@saas-biolerplate.iam.gserviceaccount.com'
 images:
-  - 'gcr.io/[PROJECT_ID]/[YOUR_IMAGE]:$BUILD_ID'
+  - 'gcr.io/saas-boilerplate/saas/backend:$BUILD_ID'
 
 options:
   logging: CLOUD_LOGGING_ONLY
