@@ -54,4 +54,4 @@ images:
   - 'gcr.io/saas-boilerplate/saas/backend:$BUILD_ID'
 
 options:
-  logging: CLOUD_LOGGING_ONLY
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
