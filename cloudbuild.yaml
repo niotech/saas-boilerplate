@@ -1,11 +1,11 @@
 steps:
   # Step 1: Pull Docker Compose image
-  - name: 'docker/compose:1.29.2'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        docker-compose -f docker-compose.yml pull
+  # - name: 'docker/compose:1.29.2'
+  #   entrypoint: 'sh'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       docker-compose -f docker-compose.yml pull
 
   # Step 2: Build and push each service defined in your Docker Compose file
   - name: 'docker/compose:1.29.2'
