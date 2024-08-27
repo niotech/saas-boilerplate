@@ -26,7 +26,7 @@ steps:
   #       docker-compose -f docker-compose.yml up -d
   #       docker image ls
 
-  Step 3: Deploy to Cloud Run
+  # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
     entrypoint: 'gcloud'
     args:
