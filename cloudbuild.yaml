@@ -1,3 +1,4 @@
+serviceAccount: 'saas-445@saas-biolerplate.iam.gserviceaccount.com'
 steps:
   # Step 1: Pull Docker Compose image
   # - name: 'docker/compose:1.29.2'
@@ -14,8 +15,9 @@ steps:
       - '-c'
       - |
         docker-compose -f docker-compose.yml build
-        docker-compose -f docker-compose.yml push
         docker image ls
+        docker tag saas/backend gcr.io/saas-biolerplate/saas-backend:latest
+        docker push gcr.io/saas-biolerplate/saas-backend:latest
 
   # Optional: Run Docker Compose locally (if needed)
   # - name: 'docker/compose:1.29.2'
@@ -34,7 +36,7 @@ steps:
       - 'deploy'
       - 'saas-backend'  # Replace with your Cloud Run service name
       - '--image'
-      - 'gcr.io/saas-boilerplate/saas/backend:$BUILD_ID'  # Replace with your image name
+      - 'gcr.io/saas-biolerplate/saas-backend:latest'  # Replace with your image name
       - '--region'
       - 'us-central1'  # Replace with the region where you want to deploy
       - '--platform'
@@ -49,9 +51,8 @@ steps:
   #     - |
   #       docker-compose -f docker-compose.yml down
 
-serviceAccount: 'saas-445@saas-biolerplate.iam.gserviceaccount.com'
 images:
-  - 'gcr.io/saas-boilerplate/saas/backend:$BUILD_ID'
+  - 'gcr.io/saas-biolerplate/saas-backend:latest'
 
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
