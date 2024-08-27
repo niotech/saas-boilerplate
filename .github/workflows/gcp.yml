@@ -4,7 +4,7 @@ name: Build and Push Images to GCP
 on:
     push:
         branches:
-          - master
+          - gh_action_deployment
 jobs:
     build-push-gcr:
         name: Build and Push to GCP
